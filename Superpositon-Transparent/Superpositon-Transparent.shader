@@ -72,7 +72,7 @@
 			DistanceRamp = smoothstep(_FogNear, _FogFar, DistanceRamp);
 
 			// Define Dither Matrix
-			// Dither Matrix: 
+			// Dither Matrix: https://en.wikipedia.org/wiki/Ordered_dithering
 			float4x4 thresholdMatrix =
 			{ 1.0 / 17.0,  9.0 / 17.0,  3.0 / 17.0, 11.0 / 17.0,
 			  13.0 / 17.0,  5.0 / 17.0, 15.0 / 17.0,  7.0 / 17.0,
@@ -94,7 +94,7 @@
 			col.rgb *= pow(DistanceRamp,1);
 
 
-			// Calculating Transparent By 動態抖動
+			// Calculating transparent by ordered dithering
 			clip( step(0.5, col.a) *DistanceRamp - thresholdMatrix[fmod(pos.x, 4)] * _RowAccess[fmod(pos.y, 4)]);
 			// Output
                 return col;
